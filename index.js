@@ -33,6 +33,11 @@ async function run() {
       res.send(result);
     })
 
+    app.post('/pets', async (req, res)=>{
+      const data = req.body;
+      const result = await collections.insertOne(data);
+      res.send(result);
+    })
 
 
 
