@@ -27,6 +27,7 @@ async function run() {
 
     const db = client.db('PawMart')
     const collections = db.collection('pets/suplies')
+    const orderCollections = db.collection('orders')
 
     app.get('/pets', async (req, res)=>{
       const result = await collections.find().toArray();
@@ -41,9 +42,19 @@ async function run() {
 
     app.get('/pets/:id', async (req, res)=>{
       const {id} = req.params;
-      console.log(id)
       const objectId = new ObjectId(id);
       const result = await collections.findOne({_id: objectId});
+      res.send(result);
+    })
+
+    app.post('/orders', async (req, res)=>{
+      const data = req.body;
+      const result = await orderCollections.insertOne(data);
+      res.send(result);
+    })
+
+    app.get('/orders', async (req, res)=>{
+      const result = await orderCollections.find().toArray();
       res.send(result);
     })
 
