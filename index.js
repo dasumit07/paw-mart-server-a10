@@ -59,8 +59,25 @@ async function run() {
     })
 
     app.get('/latest-items', async (req, res)=>{
-      const result = await collections.find().sort({date: 'desc'}).limit(6).toArray()
-      res.send(result)
+      const result = await collections.find().sort({date: 'desc'}).limit(6).toArray();
+      res.send(result);
+    })
+
+    app.get('/myListings', async(req,res)=>{
+      const email = req.query.email;
+      const result = await collections.find({email: email}).toArray();
+      res.send(result);
+    })
+
+    app.put('/pets/:id', async (req, res)=>{
+      const {id} = req.params;
+      const data = req.body;
+      const objectId = new ObjectId(id);
+      const update = {
+        $set: data
+      }
+      const result = await collections.updateOne({_id: objectId}, update);
+      res.send(result);
     })
 
 
