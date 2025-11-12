@@ -93,6 +93,12 @@ async function run() {
       res.send(result);
     })
 
+    app.get('/search', async (req,res) =>{
+      const searchText = req.query.search;
+      const result = await collections.find({name: {$regex: searchText, $options: "i"}}).toArray();
+      res.send(result);
+    })
+
 
 
     // Connect the client to the server	(optional starting in v4.7)
