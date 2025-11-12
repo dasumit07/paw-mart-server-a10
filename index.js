@@ -58,6 +58,11 @@ async function run() {
       res.send(result);
     })
 
+    app.get('/latest-items', async (req, res)=>{
+      const result = await collections.find().sort({date: 'desc'}).limit(6).toArray()
+      res.send(result)
+    })
+
 
 
     // Connect the client to the server	(optional starting in v4.7)
