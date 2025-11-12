@@ -80,6 +80,13 @@ async function run() {
       res.send(result);
     })
 
+    app.delete('/pets/:id', async (req, res)=>{
+      const {id} = req.params;
+      const objectId = new ObjectId(id);
+      const result = await collections.deleteOne({_id: objectId});
+      res.send(result);
+    })
+
 
 
     // Connect the client to the server	(optional starting in v4.7)
