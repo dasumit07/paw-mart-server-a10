@@ -93,6 +93,13 @@ async function run() {
       res.send(result);
     })
 
+    app.delete('/orders/:id', async (req, res)=>{
+      const {id} = req.params;
+      const objectId = new ObjectId(id);
+      const result = await orderCollections.deleteOne({_id: objectId});
+      res.send(result);
+    })
+
     app.get('/search', async (req,res) =>{
       const searchText = req.query.search;
       const result = await collections.find({name: {$regex: searchText, $options: "i"}}).toArray();
